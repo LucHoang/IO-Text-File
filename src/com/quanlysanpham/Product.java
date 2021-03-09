@@ -61,6 +61,10 @@ public class Product {
 
     @Override
     public String toString() {
+        return  id + "," + name + "," + price + "," + quantity + "," + description;
+    }
+
+    public String display() {
         return  "Mã sản phẩm='" + id + '\'' +
                 ", Tên='" + name + '\'' +
                 ", Giá=" + price +

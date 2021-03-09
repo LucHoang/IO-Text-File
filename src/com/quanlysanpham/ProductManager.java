@@ -27,9 +27,9 @@ public class ProductManager {
                 if (i>listProduct.size()-1) {
                     break;
                 }
-                System.out.println("STT "+(i+1)+": "+listProduct.get(i));
+                System.out.println("STT "+(i+1)+": "+listProduct.get(i).display());
             }
-            if (end>listProduct.size()-1) break;
+            if (end>=listProduct.size()-1) break;
             start+=5;
             end+=5;
 
@@ -170,7 +170,7 @@ public class ProductManager {
             }
         });
 
-        System.out.println(listProduct.get(0));
+        System.out.println(listProduct.get(0).display());
 
         int max = listProduct.get(0).getPrice();
         int indexMax = 0;
@@ -186,7 +186,7 @@ public class ProductManager {
                 isMax = false;
             }
             if (isMax) {
-                System.out.println(listProduct.get(indexMax));
+                System.out.println(listProduct.get(indexMax).display());
             }
         }
     }
@@ -198,7 +198,7 @@ public class ProductManager {
             String choose = input.nextLine();
 
             if (choose.isEmpty()) {
-                File file = new File(".\\data\\test.csv");
+                File file = new File(".\\data\\source.csv");
 
                 if (!file.exists()) {
                     throw new FileNotFoundException();
@@ -244,6 +244,7 @@ public class ProductManager {
             try {
                 FileWriter fileWriter = new FileWriter(".\\data\\products.csv");
 
+                fileWriter.write("Mã sản phẩm,Tên,Giá,Số lượng,Mô tả\n");
                 for (Product product : listProduct) {
                     fileWriter.write(product + "\n");
                 }
@@ -261,11 +262,22 @@ public class ProductManager {
         System.out.print("Nhập mã sản phẩm: ");
         while (true) {
             String id = input.nextLine();
-            if (!id.isEmpty()) {
-                product.setId(id);
-                break;
+            if (id.isEmpty()) {
+                System.err.print("Nhập mã sản phẩm (không được để trống): ");
+            } else {
+                boolean isExist = true;
+                for (Product element: listProduct) {
+                    if (element.getId().equalsIgnoreCase(id)) {
+                        System.err.print("Mã sản phẩm đã tồn tại! Nhập lại mã sản phẩm: ");
+                        isExist = false;
+                        break;
+                    }
+                }
+                if (isExist) {
+                    product.setId(id);
+                    break;
+                }
             }
-            System.err.print("Nhập mã sản phẩm (không được để trống): ");
         }
 
         System.out.print("Nhập tên sản phẩm: ");
@@ -280,24 +292,32 @@ public class ProductManager {
 
         System.out.print("Nhập giá sản phẩm: ");
         while (true) {
-            String temp = input.nextLine();
-            if (!temp.isEmpty()) {
-                int price = Integer.parseInt(temp);
-                product.setPrice(price);
-                break;
+            try {
+                String temp = input.nextLine();
+                if (!temp.isEmpty()) {
+                    int price = Integer.parseInt(temp);
+                    product.setPrice(price);
+                    break;
+                }
+                System.err.print("Nhập giá sản phẩm (không được để trống): ");
+            } catch (NumberFormatException e) {
+                System.err.print("Nhập sai định dạng! Nhập lại giá sản phẩm: ");
             }
-            System.err.print("Nhập giá sản phẩm (không được để trống): ");
         }
 
         System.out.print("Nhập số lượng sản phẩm: ");
         while (true) {
-            String temp = input.nextLine();
-            if (!temp.isEmpty()) {
-                int quantity = Integer.parseInt(temp);
-                product.setQuantity(quantity);
-                break;
+            try {
+                String temp = input.nextLine();
+                if (!temp.isEmpty()) {
+                    int quantity = Integer.parseInt(temp);
+                    product.setQuantity(quantity);
+                    break;
+                }
+                System.err.print("Nhập số lượng sản phẩm (không được để trống): ");
+            } catch (NumberFormatException e) {
+                System.err.print("Nhập sai định dạng! Nhập lại số lượng sản phẩm: ");
             }
-            System.err.print("Nhập số lượng sản phẩm (không được để trống): ");
         }
 
         System.out.print("Nhập mô tả sản phẩm: ");
