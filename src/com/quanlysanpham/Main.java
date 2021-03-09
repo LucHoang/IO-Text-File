@@ -12,9 +12,9 @@ public class Main {
 //        Product product2 = new Product("2", "2", 5, 2, "a");
 //        Product product3 = new Product("3", "3", 2, 3, "a");
 //        Product product4 = new Product("4", "4", 3, 9, "a");
-//        Product product5 = new Product("5", "5", 1, 4, "a");
+//        Product product5 = new Product("5", "5", 5, 4, "a");
 //        Product product6 = new Product("6", "6", 0, 2, "a");
-//        Product product7 = new Product("7", "7", 4, 3, "a");
+//        Product product7 = new Product("7", "7", 5, 3, "a");
 //        Product product8 = new Product("8", "8", 3, 9, "a");
 //
 //        productManager.listProduct.add(product1);
@@ -31,7 +31,7 @@ public class Main {
         try {
             do {
                 showMenu();
-                choose = input.nextInt();
+                choose = Integer.parseInt(input.nextLine());
 
                 switch (choose) {
                     case 1:

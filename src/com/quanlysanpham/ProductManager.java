@@ -20,6 +20,7 @@ public class ProductManager {
         int start = 0;
         int end = 4;
         System.out.println("Chọn 1 để thêm mới, Enter để xem tiếp");
+        Scanner scanner = new Scanner(System.in);
 
         while (isLoop) {
             for (int i=start; i<=end; i++) {
@@ -32,7 +33,7 @@ public class ProductManager {
             start+=5;
             end+=5;
 
-            String check = input.nextLine();
+            String check = scanner.nextLine();
             if (check.equalsIgnoreCase("1")) {
                 addProduct();
                 isLoop = false;
@@ -128,7 +129,7 @@ public class ProductManager {
         System.out.println("Chọn 2 để sắp xếp theo giá giảm dần: ");
         System.out.println("Chọn 3 để quay lại");
 
-        int choose = input.nextInt();
+        int choose = Integer.parseInt(input.nextLine());
 
         switch (choose) {
             case 1:
@@ -138,6 +139,7 @@ public class ProductManager {
                         return o1.getPrice() - o2.getPrice();
                     }
                 });
+                System.out.println("Sắp xếp thành công");
                 break;
             case 2:
                 Collections.sort(listProduct, new Comparator<Product>() {
@@ -146,6 +148,7 @@ public class ProductManager {
                         return o2.getPrice() - o1.getPrice();
                     }
                 });
+                System.out.println("Sắp xếp thành công");
                 break;
             case 3:
                 break;
@@ -166,7 +169,26 @@ public class ProductManager {
                 return o2.getPrice() - o1.getPrice();
             }
         });
+
         System.out.println(listProduct.get(0));
+
+        int max = listProduct.get(0).getPrice();
+        int indexMax = 0;
+        boolean isMax = true;
+        for (int k=0; k<listProduct.size()-1 && isMax; k++) {
+            for (int i = k+1; i < listProduct.size(); i++) {
+                if (listProduct.get(i).getPrice() >= max) {
+                    max = listProduct.get(i).getPrice();
+                    indexMax = i;
+                    isMax = true;
+                    break;
+                }
+                isMax = false;
+            }
+            if (isMax) {
+                System.out.println(listProduct.get(indexMax));
+            }
+        }
     }
 
     public void readFile() {
